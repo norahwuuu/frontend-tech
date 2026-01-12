@@ -116,7 +116,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleTheme, isDarkMode }) => 
                   WebkitTextFillColor: 'transparent',
                 }}
               >
-                Frontend Tech
+                Tech Portfolio
               </Typography>
             </Link>
           </Box>

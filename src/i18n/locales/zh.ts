@@ -116,7 +116,7 @@ export const zh = {
   },
   // Footer
   footer: {
-    title: '前端技术',
+    title: '技术作品集',
     description: '一位充满热情的前端开发工程师，致力于创造卓越的数字体验。',
     quickLinks: '快速链接',
     knowledgeBase: '知识库',

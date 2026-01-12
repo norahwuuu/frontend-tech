@@ -116,7 +116,7 @@ export const en = {
   },
   // Footer
   footer: {
-    title: 'Frontend Tech',
+    title: 'Tech Portfolio',
     description: 'A passionate frontend developer creating exceptional digital experiences.',
     quickLinks: 'Quick Links',
     knowledgeBase: 'Knowledge Base',
