@@ -1,0 +1,11 @@
+/* Material UI uses its own styling system */
+/* This file is kept for any custom global styles if needed */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}

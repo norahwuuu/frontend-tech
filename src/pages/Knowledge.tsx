@@ -1,0 +1,208 @@
+import React, { useState, useMemo } from 'react'
+import {
+  Box,
+  Typography,
+  Drawer,
+  IconButton,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
+import { Menu, Close } from '@mui/icons-material'
+import { Sidebar } from '@/components/Sidebar'
+import { SceneCard } from '@/components/SceneCard'
+import { SceneDetail } from '@/components/SceneDetail'
+import { knowledgeScenes, categories, allTags } from '@/data/knowledgeData'
+import type { KnowledgeScene } from '@/data/knowledgeData'
+import { useLanguage } from '@/hooks/useLanguage'
+
+export const Knowledge: React.FC = () => {
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+  const { t } = useLanguage()
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const [selectedTag, setSelectedTag] = useState<string | null>(null)
+  const [selectedScene, setSelectedScene] = useState<KnowledgeScene | null>(null)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [detailOpen, setDetailOpen] = useState(false)
+
+  // Filter scenes based on selected category and tag
+  const filteredScenes = useMemo(() => {
+    return knowledgeScenes.filter((scene) => {
+      const matchesCategory = !selectedCategory || scene.category === selectedCategory
+      const matchesTag = !selectedTag || scene.tags.includes(selectedTag)
+      return matchesCategory && matchesTag
+    })
+  }, [selectedCategory, selectedTag])
+
+  // Auto-select first scene when filter changes or no scene is selected
+  React.useEffect(() => {
+    if (filteredScenes.length > 0) {
+      const isCurrentSceneInFiltered = selectedScene && filteredScenes.some(s => s.id === selectedScene.id)
+      if (!isCurrentSceneInFiltered) {
+        setSelectedScene(filteredScenes[0])
+      }
+    } else {
+      setSelectedScene(null)
+    }
+  }, [filteredScenes])
+
+  const handleCategorySelect = (category: string | null) => {
+    setSelectedCategory(category)
+    if (isMobile) {
+      setSidebarOpen(false)
+    }
+  }
+
+  const handleTagSelect = (tag: string | null) => {
+    setSelectedTag(tag)
+    if (isMobile) {
+      setSidebarOpen(false)
+    }
+  }
+
+  const handleSceneClick = (scene: KnowledgeScene) => {
+    setSelectedScene(scene)
+    if (isMobile) {
+      setDetailOpen(true)
+    }
+  }
+
+  return (
+    <Box sx={{ display: 'flex', minHeight: 'calc(100vh - 64px)' }}>
+      {/* Desktop Sidebar */}
+      {!isMobile && (
+        <Sidebar
+          categories={categories}
+          tags={allTags}
+          selectedCategory={selectedCategory}
+          selectedTag={selectedTag}
+          onCategorySelect={handleCategorySelect}
+          onTagSelect={handleTagSelect}
+        />
+      )}
+
+      {/* Mobile Sidebar Drawer */}
+      {isMobile && (
+        <Drawer
+          anchor="left"
+          open={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
+          ModalProps={{
+            keepMounted: true,
+          }}
+        >
+          <Box sx={{ width: 280, position: 'relative' }}>
+            <Box sx={{ p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: 1, borderColor: 'divider' }}>
+              <Typography variant="h6" fontWeight={600}>
+                {t.knowledge.filters}
+              </Typography>
+              <IconButton onClick={() => setSidebarOpen(false)} size="small">
+                <Close />
+              </IconButton>
+            </Box>
+            <Sidebar
+              categories={categories}
+              tags={allTags}
+              selectedCategory={selectedCategory}
+              selectedTag={selectedTag}
+              onCategorySelect={handleCategorySelect}
+              onTagSelect={handleTagSelect}
+            />
+          </Box>
+        </Drawer>
+      )}
+
+      {/* Main Content Area */}
+      <Box sx={{ flex: 1, display: 'flex', flexDirection: { xs: 'column', md: 'row' }, overflow: 'hidden' }}>
+        {/* Mobile Filter Button */}
+        {isMobile && (
+          <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider', bgcolor: 'background.paper', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Typography variant="h6" fontWeight={600}>
+              {t.knowledge.knowledgeBase}
+            </Typography>
+            <IconButton onClick={() => setSidebarOpen(true)}>
+              <Menu />
+            </IconButton>
+          </Box>
+        )}
+
+        {/* Scene List */}
+        <Box
+          sx={{
+            width: { xs: '100%', md: 400 },
+            borderRight: { xs: 0, md: 1 },
+            borderColor: 'divider',
+            overflow: 'auto',
+            bgcolor: 'background.default',
+            maxHeight: { xs: '50vh', md: 'none' },
+          }}
+        >
+          <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider', bgcolor: 'background.paper' }}>
+            <Typography variant="h6" fontWeight={600}>
+              {t.knowledge.scenes}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {filteredScenes.length} {filteredScenes.length === 1 ? t.knowledge.sceneFound : t.knowledge.scenesFound}
+            </Typography>
+          </Box>
+          <Box sx={{ p: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
+            {filteredScenes.length === 0 ? (
+              <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center', py: 4 }}>
+                {t.knowledge.noScenes}
+              </Typography>
+            ) : (
+              filteredScenes.map((scene) => (
+                <SceneCard
+                  key={scene.id}
+                  title={scene.title}
+                  description={scene.description}
+                  category={scene.category}
+                  tags={scene.tags}
+                  onClick={() => handleSceneClick(scene)}
+                  selected={selectedScene?.id === scene.id}
+                />
+              ))
+            )}
+          </Box>
+        </Box>
+
+        {/* Scene Detail - Desktop */}
+        {!isMobile && (
+          <Box sx={{ flex: 1, overflow: 'auto', bgcolor: 'background.paper' }}>
+            <SceneDetail scene={selectedScene} />
+          </Box>
+        )}
+
+        {/* Scene Detail - Mobile Drawer */}
+        {isMobile && (
+          <Drawer
+            anchor="bottom"
+            open={detailOpen}
+            onClose={() => setDetailOpen(false)}
+            PaperProps={{
+              sx: {
+                height: '90vh',
+                borderTopLeftRadius: 16,
+                borderTopRightRadius: 16,
+              },
+            }}
+          >
+            <Box sx={{ position: 'sticky', top: 0, bgcolor: 'background.paper', zIndex: 1, p: 2, borderBottom: 1, borderColor: 'divider' }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography variant="h6" fontWeight={600}>
+                  {t.knowledge.sceneDetails}
+                </Typography>
+                <IconButton onClick={() => setDetailOpen(false)} size="small">
+                  <Close />
+                </IconButton>
+              </Box>
+            </Box>
+            <Box sx={{ overflow: 'auto', height: '100%' }}>
+              <SceneDetail scene={selectedScene} />
+            </Box>
+          </Drawer>
+        )}
+      </Box>
+    </Box>
+  )
+}
