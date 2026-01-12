@@ -2,24 +2,22 @@ import React, { useState } from 'react'
 import { Card, CardContent, CardHeader, Typography, Chip, Box, Tooltip } from '@mui/material'
 import { ArrowForward } from '@mui/icons-material'
 
+import type { Scene } from '@/schemas'
+
 interface SceneCardProps {
-  title: string
-  description: string
-  category: string
-  tags: string[]
+  scene: Scene
   onClick: () => void
   selected?: boolean
 }
 
 export const SceneCard: React.FC<SceneCardProps> = ({
-  title,
-  description,
-  category,
-  tags,
+  scene,
   onClick,
   selected = false,
 }) => {
   const [showDescription, setShowDescription] = useState(false)
+  const description = scene.context
+  const solutionsCount = scene.solutions.length
 
   return (
     <Tooltip
@@ -49,10 +47,10 @@ export const SceneCard: React.FC<SceneCardProps> = ({
         <CardHeader
           title={
             <Typography variant="h6" component="h3" fontWeight={600}>
-              {title}
+              {scene.title}
             </Typography>
           }
-          subheader={category}
+          subheader={`${scene.category} • ${solutionsCount} solution${solutionsCount > 1 ? 's' : ''}`}
         />
         <CardContent>
           <Typography
@@ -70,7 +68,7 @@ export const SceneCard: React.FC<SceneCardProps> = ({
             {description}
           </Typography>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
-            {tags.slice(0, 3).map((tag) => (
+            {scene.tags.slice(0, 3).map((tag) => (
               <Chip key={tag} label={tag} size="small" variant="outlined" />
             ))}
           </Box>

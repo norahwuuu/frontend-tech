@@ -17,7 +17,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { CodeBlock } from './CodeBlock'
 import { Tag } from './Tag'
-import type { BlogArticle } from '@/data/blogData'
+import type { BlogArticle } from '@/schemas'
 
 interface BlogDetailProps {
   article: BlogArticle | null

@@ -11,7 +11,7 @@ import {
 } from '@mui/material'
 import { Search } from '@mui/icons-material'
 import { Tag } from './Tag'
-import type { ProjectType } from '@/data/projectsData'
+import type { ProjectType } from '@/schemas/projects'
 import { useLanguage } from '@/hooks/useLanguage'
 
 interface FiltersBarProps {

@@ -10,7 +10,7 @@ import {
 } from '@mui/material'
 import { ArrowForward, Code, Launch } from '@mui/icons-material'
 import { Tag } from './Tag'
-import type { Project } from '@/data/projectsData'
+import type { Project } from '@/schemas'
 
 interface ProjectCardProps {
   project: Project

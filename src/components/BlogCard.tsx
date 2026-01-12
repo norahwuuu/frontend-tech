@@ -9,7 +9,7 @@ import {
 } from '@mui/material'
 import { AccessTime, CalendarToday } from '@mui/icons-material'
 import { Tag } from './Tag'
-import type { BlogArticle } from '@/data/blogData'
+import type { BlogArticle } from '@/schemas'
 
 interface BlogCardProps {
   article: BlogArticle

@@ -13,8 +13,9 @@ import { ProjectCard } from '@/components/ProjectCard'
 import { ProjectDetail } from '@/components/ProjectDetail'
 import { FiltersBar } from '@/components/FiltersBar'
 import { Footer } from '@/components/Footer'
-import { projects, allTechStack } from '@/data/projectsData'
-import type { Project, ProjectType } from '@/data/projectsData'
+import { projects, allTechStack } from '@/data/projects'
+import type { Project } from '@/schemas'
+import type { ProjectType } from '@/schemas/projects'
 import { useLanguage } from '@/hooks/useLanguage'
 
 export const Projects: React.FC = () => {

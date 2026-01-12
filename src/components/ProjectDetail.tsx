@@ -10,13 +10,12 @@ import {
   IconButton,
   Button,
   Stack,
-  Paper,
 } from '@mui/material'
 import { ExpandLess, ExpandMore, Launch, GitHub } from '@mui/icons-material'
 import { CodeBlock } from './CodeBlock'
 import { LiveDemo } from './LiveDemo'
 import { Tag } from './Tag'
-import type { Project } from '@/data/projectsData'
+import type { Project } from '@/schemas'
 
 interface ProjectDetailProps {
   project: Project | null
@@ -102,25 +101,6 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project }) => {
 
       <Divider sx={{ my: 3 }} />
 
-      {project.solution && (
-        <>
-          <Typography variant="h6" component="h2" gutterBottom fontWeight={600}>
-            Solution
-          </Typography>
-          <Paper elevation={0} sx={{ p: 3, mb: 4, bgcolor: 'grey.50' }}>
-            <Typography
-              variant="body1"
-              component="div"
-              sx={{
-                whiteSpace: 'pre-line',
-                lineHeight: 1.8,
-              }}
-            >
-              {project.solution}
-            </Typography>
-          </Paper>
-        </>
-      )}
 
       {project.highlights && project.highlights.length > 0 && (
         <>
@@ -152,8 +132,8 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project }) => {
           </Typography>
           <Box sx={{ mb: 4 }}>
             <CodeBlock
-              code={project.codeExample.code}
-              language={project.codeExample.language}
+              code={project.codeExample}
+              language="tsx"
             />
           </Box>
         </>
@@ -184,7 +164,7 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project }) => {
       </Box>
       <Collapse in={keyPointsExpanded} timeout="auto" unmountOnExit>
         <List>
-          {project.keyPoints.map((point, index) => (
+          {project.keyPoints?.map((point, index) => (
             <React.Fragment key={index}>
               <ListItem alignItems="flex-start">
                 <ListItemText
@@ -195,7 +175,7 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project }) => {
                   }
                 />
               </ListItem>
-              {index < project.keyPoints.length - 1 && <Divider component="li" />}
+              {project.keyPoints && index < project.keyPoints.length - 1 && <Divider component="li" />}
             </React.Fragment>
           ))}
         </List>
