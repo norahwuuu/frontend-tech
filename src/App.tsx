@@ -4,6 +4,7 @@ import { ThemeProvider, CssBaseline } from '@mui/material'
 import { useState, useEffect } from 'react'
 import { Header } from './layouts/Header'
 import { LoadingFallback } from './components/LoadingFallback'
+import { ErrorBoundary } from './components/ErrorBoundary'
 import { theme, darkTheme } from './theme'
 import { LanguageProvider } from './hooks/useLanguage'
 import { Home, Knowledge, Projects, Blog, About } from './pages'
@@ -23,27 +24,29 @@ function App() {
     localStorage.setItem('theme', newMode ? 'dark' : 'light')
   }
 
-  return (
-    <LanguageProvider>
-      <ThemeProvider theme={isDarkMode ? darkTheme : theme}>
-        <CssBaseline />
-        <BrowserRouter>
-          <Header onToggleTheme={toggleTheme} isDarkMode={isDarkMode} />
-          <main>
-            <Suspense fallback={<LoadingFallback />}>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/knowledge" element={<Knowledge />} />
-                <Route path="/project" element={<Projects />} />
-                <Route path="/blog" element={<Blog />} />
-                <Route path="/about" element={<About />} />
-              </Routes>
-            </Suspense>
-          </main>
-        </BrowserRouter>
-      </ThemeProvider>
-    </LanguageProvider>
-  )
+      return (
+        <ErrorBoundary>
+          <LanguageProvider>
+            <ThemeProvider theme={isDarkMode ? darkTheme : theme}>
+              <CssBaseline />
+              <BrowserRouter>
+                <Header onToggleTheme={toggleTheme} isDarkMode={isDarkMode} />
+                <main>
+                  <Suspense fallback={<LoadingFallback />}>
+                    <Routes>
+                      <Route path="/" element={<Home />} />
+                      <Route path="/knowledge" element={<Knowledge />} />
+                      <Route path="/project" element={<Projects />} />
+                      <Route path="/blog" element={<Blog />} />
+                      <Route path="/about" element={<About />} />
+                    </Routes>
+                  </Suspense>
+                </main>
+              </BrowserRouter>
+            </ThemeProvider>
+          </LanguageProvider>
+        </ErrorBoundary>
+      )
 }
 
 export default App

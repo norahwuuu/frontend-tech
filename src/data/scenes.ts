@@ -25,6 +25,15 @@ const { valid: validatedScenes, invalid } = validateAndFilter(
 // 如果开发环境且有无效数据，输出警告
 if (import.meta.env.DEV && invalid.length > 0) {
   console.warn(`[Data Validation] ${invalid.length} scenes failed validation:`, invalid)
+  // 在开发环境显示用户可见的警告
+  if (typeof window !== 'undefined') {
+    console.groupCollapsed('⚠️ Data Validation Warnings')
+    invalid.forEach((item) => {
+      console.warn(`Scene at index ${item.index}:`, item.error)
+      console.log('Invalid data:', item.data)
+    })
+    console.groupEnd()
+  }
 }
 
 // 导出校验后的场景数据（这是唯一的数据源）
