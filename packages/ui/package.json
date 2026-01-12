@@ -1,0 +1,77 @@
+{
+  "name": "@tech-portfolio/ui",
+  "version": "1.0.0",
+  "description": "Reusable UI component library for tech portfolio",
+  "main": "./dist/index.js",
+  "module": "./dist/index.esm.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./primitives": {
+      "import": "./dist/primitives/index.esm.js",
+      "require": "./dist/primitives/index.js",
+      "types": "./dist/primitives/index.d.ts"
+    },
+    "./blocks": {
+      "import": "./dist/blocks/index.esm.js",
+      "require": "./dist/blocks/index.js",
+      "types": "./dist/blocks/index.d.ts"
+    },
+    "./domain": {
+      "import": "./dist/domain/index.esm.js",
+      "require": "./dist/domain/index.js",
+      "types": "./dist/domain/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "react",
+    "typescript",
+    "ui-components",
+    "component-library",
+    "material-ui"
+  ],
+  "author": "Norah Wu",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "@mui/material": "^5.0.0",
+    "@mui/icons-material": "^5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@mui/material": {
+      "optional": false
+    },
+    "@mui/icons-material": {
+      "optional": false
+    }
+  },
+  "dependencies": {
+    "shiki": "^1.0.0",
+    "react-markdown": "^9.0.0",
+    "remark-gfm": "^4.0.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-typescript": "^11.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "rollup": "^4.0.0",
+    "rollup-plugin-dts": "^6.0.0",
+    "typescript": "^5.0.0"
+  }
+}

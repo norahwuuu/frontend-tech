@@ -1,0 +1,280 @@
+/**
+ * SceneViewer - 场景查看器组件
+ * 领域组件，只依赖 schema 类型，不依赖具体业务实现
+ */
+
+import React, { useState } from 'react'
+import {
+  Box,
+  Typography,
+  Paper,
+  Tabs,
+  Tab,
+  Button,
+  Stack,
+  Divider,
+  Alert,
+} from '@mui/material'
+import { PlayArrow, Download } from '@mui/icons-material'
+import { CodeBlock } from '../blocks/CodeBlock'
+import { Badge } from '../primitives/Badge'
+import type { Scene, Solution } from '../schemas'
+import type { GeneratedDemo } from '../schemas'
+
+export interface SceneViewerProps {
+  /**
+   * 场景数据（必须符合 Scene Schema）
+   */
+  scene: Scene | null
+  /**
+   * 生成的 Demo（可选）
+   */
+  generatedDemo?: GeneratedDemo | null
+  /**
+   * 当前选中的 Demo 版本（可选）
+   */
+  currentDemoVersion?: GeneratedDemo | null
+  /**
+   * 生成 Demo 回调
+   */
+  onGenerateDemo?: (solution: Solution) => Promise<void>
+  /**
+   * 导出 Markdown 回调
+   */
+  onExportMarkdown?: (scene: Scene) => void
+  /**
+   * 是否显示导出按钮
+   * @default true
+   */
+  showExport?: boolean
+}
+
+/**
+ * 场景查看器组件
+ * 
+ * @example
+ * ```tsx
+ * <SceneViewer
+ *   scene={scene}
+ *   onGenerateDemo={async (solution) => {
+ *     // Generate demo logic
+ *   }}
+ * />
+ * ```
+ */
+export const SceneViewer: React.FC<SceneViewerProps> = ({
+  scene,
+  generatedDemo,
+  currentDemoVersion,
+  onGenerateDemo,
+  onExportMarkdown,
+  showExport = true,
+}) => {
+  const [selectedSolutionIndex, setSelectedSolutionIndex] = useState(0)
+  const [generatingDemo, setGeneratingDemo] = useState(false)
+
+  if (!scene) {
+    return (
+      <Box sx={{ p: 4, textAlign: 'center' }}>
+        <Typography variant="body1" color="text.secondary">
+          Please select a scene to view details
+        </Typography>
+      </Box>
+    )
+  }
+
+  const selectedSolution = scene.solutions[selectedSolutionIndex]
+  const displayDemo = currentDemoVersion || generatedDemo
+
+  const handleGenerateDemo = async () => {
+    if (!selectedSolution || !onGenerateDemo) return
+
+    setGeneratingDemo(true)
+    try {
+      await onGenerateDemo(selectedSolution)
+    } catch (error) {
+      console.error('Failed to generate demo:', error)
+    } finally {
+      setGeneratingDemo(false)
+    }
+  }
+
+  const handleExportMarkdown = () => {
+    if (onExportMarkdown) {
+      onExportMarkdown(scene)
+    }
+  }
+
+  return (
+    <Box sx={{ p: 4 }}>
+      {/* Title and Basic Info */}
+      <Box sx={{ mb: 4 }}>
+        <Typography variant="h4" component="h1" gutterBottom fontWeight={700}>
+          {scene.title}
+        </Typography>
+        <Stack direction="row" spacing={1} sx={{ mb: 2 }} flexWrap="wrap">
+          <Badge label={scene.category} color="primary" size="small" />
+          {scene.tags.map((tag) => (
+            <Badge key={tag} label={tag} variant="outlined" size="small" />
+          ))}
+        </Stack>
+        <Divider sx={{ my: 2 }} />
+      </Box>
+
+      {/* Context */}
+      <Paper sx={{ p: 3, mb: 4 }}>
+        <Typography variant="h6" gutterBottom fontWeight={600}>
+          Context
+        </Typography>
+        <Typography variant="body1" color="text.secondary" sx={{ whiteSpace: 'pre-wrap' }}>
+          {scene.context}
+        </Typography>
+      </Paper>
+
+      {/* Solutions Tabs */}
+      {scene.solutions.length > 1 && (
+        <Box sx={{ mb: 3 }}>
+          <Tabs
+            value={selectedSolutionIndex}
+            onChange={(_, newValue) => setSelectedSolutionIndex(newValue)}
+            variant="scrollable"
+            scrollButtons="auto"
+          >
+            {scene.solutions.map((solution, index) => (
+              <Tab
+                key={solution.id}
+                label={`Solution ${index + 1}`}
+                sx={{ textTransform: 'none' }}
+              />
+            ))}
+          </Tabs>
+        </Box>
+      )}
+
+      {/* Selected Solution */}
+      {selectedSolution && (
+        <Paper sx={{ p: 3, mb: 4 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+            <Typography variant="h6" fontWeight={600}>
+              Solution {selectedSolutionIndex + 1}
+            </Typography>
+            <Stack direction="row" spacing={1}>
+              {onGenerateDemo && (
+                <Button
+                  variant="outlined"
+                  size="small"
+                  startIcon={<PlayArrow />}
+                  onClick={handleGenerateDemo}
+                  disabled={generatingDemo}
+                >
+                  {generatingDemo ? 'Generating...' : 'Generate Demo'}
+                </Button>
+              )}
+              {showExport && onExportMarkdown && (
+                <Button
+                  variant="outlined"
+                  size="small"
+                  startIcon={<Download />}
+                  onClick={handleExportMarkdown}
+                >
+                  Export Markdown
+                </Button>
+              )}
+            </Stack>
+          </Box>
+
+          {selectedSolution.autoGenerated && (
+            <Alert severity="info" sx={{ mb: 2 }}>
+              This solution was auto-generated by {selectedSolution.generator || 'unknown'}
+            </Alert>
+          )}
+
+          {/* Problem */}
+          <Box sx={{ mb: 3 }}>
+            <Typography variant="subtitle1" fontWeight={600} gutterBottom>
+              Problem
+            </Typography>
+            <Typography variant="body1" color="text.secondary" sx={{ whiteSpace: 'pre-wrap' }}>
+              {selectedSolution.problem}
+            </Typography>
+          </Box>
+
+          {/* Approach */}
+          <Box sx={{ mb: 3 }}>
+            <Typography variant="subtitle1" fontWeight={600} gutterBottom>
+              Approach
+            </Typography>
+            <Typography variant="body1" color="text.secondary" sx={{ whiteSpace: 'pre-wrap' }}>
+              {selectedSolution.approach}
+            </Typography>
+          </Box>
+
+          {/* Code Demo */}
+          {selectedSolution.codeDemo && !displayDemo && (
+            <Box sx={{ mb: 3 }}>
+              <Typography variant="subtitle1" fontWeight={600} gutterBottom>
+                Code Example
+              </Typography>
+              <CodeBlock code={selectedSolution.codeDemo} language="tsx" />
+            </Box>
+          )}
+
+          {/* Generated Demo */}
+          {displayDemo && (
+            <Box sx={{ mb: 3 }}>
+              <Typography variant="subtitle1" fontWeight={600} gutterBottom>
+                Generated Demo
+              </Typography>
+              <CodeBlock code={displayDemo.code} language="tsx" />
+              {displayDemo.autoGenerated && (
+                <Alert severity="info" sx={{ mt: 1 }}>
+                  Generated by {displayDemo.generator} • Version {displayDemo.version}
+                </Alert>
+              )}
+            </Box>
+          )}
+
+          {/* Key Points */}
+          {selectedSolution.keyPoints.length > 0 && (
+            <Box>
+              <Typography variant="subtitle1" fontWeight={600} gutterBottom>
+                Key Points
+              </Typography>
+              <Stack spacing={2}>
+                {selectedSolution.keyPoints.map((kp) => (
+                  <Box key={kp.id} sx={{ pl: 2, borderLeft: 2, borderColor: 'primary.main' }}>
+                    <Typography variant="body1" fontWeight={600}>
+                      {kp.title}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {kp.description}
+                    </Typography>
+                    {kp.tags.length > 0 && (
+                      <Stack direction="row" spacing={0.5} sx={{ mt: 1 }} flexWrap="wrap">
+                        {kp.tags.map((tag) => (
+                          <Badge key={tag} label={tag} size="small" variant="outlined" />
+                        ))}
+                      </Stack>
+                    )}
+                  </Box>
+                ))}
+              </Stack>
+            </Box>
+          )}
+        </Paper>
+      )}
+
+      {/* Multiple Solutions Comparison */}
+      {scene.solutions.length > 1 && (
+        <Paper sx={{ p: 3 }}>
+          <Typography variant="h6" gutterBottom fontWeight={600}>
+            Solutions Comparison
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            This scene contains {scene.solutions.length} solutions. Switch between them using the tabs above.
+          </Typography>
+        </Paper>
+      )}
+    </Box>
+  )
+}
