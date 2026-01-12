@@ -133,13 +133,62 @@ export const MarkdownImporter: React.FC<MarkdownImporterProps> = ({ onImport, on
 
           {error && (
             <Alert severity="error" sx={{ mb: 2 }}>
-              {error}
+              <Typography variant="subtitle2" gutterBottom>
+                Import Error:
+              </Typography>
+              <Typography variant="body2" component="pre" sx={{ whiteSpace: 'pre-wrap', fontFamily: 'monospace' }}>
+                {error}
+              </Typography>
             </Alert>
           )}
 
-          <Typography variant="caption" color="text.secondary">
-            支持的格式：Scene 标题、Context、Solution（Problem/Approach/Key Points/Code Demo）
-          </Typography>
+          <Alert severity="info" sx={{ mb: 2 }}>
+            <Typography variant="caption" component="div">
+              <strong>Supported Format:</strong>
+              <br />
+              # Scene: [Title]
+              <br />
+              ---
+              <br />
+              category: [Category]
+              <br />
+              tags: ["tag1", "tag2"]
+              <br />
+              ---
+              <br />
+              ## Context
+              <br />
+              [Context description]
+              <br />
+              <br />
+              ## Solution: [Name]
+              <br />
+              ### Problem
+              <br />
+              [Problem description]
+              <br />
+              <br />
+              ### Approach
+              <br />
+              [Approach description]
+              <br />
+              <br />
+              ### Key Points
+              <br />
+              - [Point 1]: [Description]
+              <br />
+              - [Point 2]: [Description]
+              <br />
+              <br />
+              ### Code Demo
+              <br />
+              ```tsx
+              <br />
+              [Code example]
+              <br />
+              ```
+            </Typography>
+          </Alert>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCancel}>取消</Button>

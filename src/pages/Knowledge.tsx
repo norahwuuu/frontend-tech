@@ -12,6 +12,7 @@ import { Sidebar } from '@/components/Sidebar'
 import { SceneCard } from '@/components/SceneCard'
 import { SceneViewer } from '@/components/SceneViewer'
 import { MarkdownImporter } from '@/components/MarkdownImporter'
+import { MarkdownExporter } from '@/components/MarkdownExporter'
 import { scenes, categories, allTags } from '@/data/scenes'
 import type { Scene } from '@/schemas'
 import { parseScene } from '@/utils/validation'
@@ -158,8 +159,9 @@ export const Knowledge: React.FC = () => {
             <Typography variant="h6" fontWeight={600}>
               {t.knowledge.knowledgeBase}
             </Typography>
-            <Box sx={{ display: 'flex', gap: 1 }}>
+            <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
               <MarkdownImporter onImport={handleMarkdownImport} />
+              <MarkdownExporter scenes={allScenes} buttonText="Export" />
               <IconButton onClick={() => setSidebarOpen(true)}>
                 <Menu />
               </IconButton>
