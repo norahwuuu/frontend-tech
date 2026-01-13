@@ -109,23 +109,38 @@ export const aboutData: AboutData = {
     },
   ],
   skills: [
+    // Frontend Core
     { tech: 'React', level: 10, category: 'Frontend' },
-    { tech: 'TypeScript', level: 10, category: 'Language' },
-    { tech: 'JavaScript', level: 10, category: 'Language' },
-    { tech: 'Redux Toolkit', level: 9, category: 'State Management' },
-    { tech: 'React Native', level: 8, category: 'Mobile' },
-    { tech: 'Vue.js', level: 8, category: 'Framework' },
-    { tech: 'WebAssembly', level: 8, category: 'Advanced' },
-    { tech: 'Web Worker', level: 8, category: 'Advanced' },
-    { tech: 'HTML5', level: 10, category: 'Fundamental' },
-    { tech: 'CSS3', level: 10, category: 'Fundamental' },
+    { tech: 'TypeScript', level: 10, category: 'Frontend' },
+    { tech: 'JavaScript', level: 10, category: 'Frontend' },
+    { tech: 'HTML5', level: 10, category: 'Frontend' },
+    { tech: 'CSS3', level: 10, category: 'Frontend' },
+    
+    // Frontend Frameworks & Libraries
+    { tech: 'Redux Toolkit', level: 9, category: 'Frontend' },
+    { tech: 'Vue.js', level: 8, category: 'Frontend' },
+    { tech: 'React Native', level: 8, category: 'Frontend' },
+    { tech: 'AngularJS', level: 7, category: 'Frontend' },
+    
+    // Advanced Frontend
+    { tech: 'WebAssembly', level: 8, category: 'Frontend' },
+    { tech: 'Web Worker', level: 8, category: 'Frontend' },
+    
+    // Backend
     { tech: 'Java (Spring Boot)', level: 7, category: 'Backend' },
     { tech: 'Python', level: 6, category: 'Backend' },
-    { tech: 'AngularJS', level: 7, category: 'Framework' },
-    { tech: 'Vite', level: 9, category: 'Build Tools' },
-    { tech: 'Git', level: 9, category: 'Tools' },
-    { tech: 'GitHub Actions', level: 8, category: 'DevOps' },
-    { tech: 'Jira', level: 7, category: 'Tools' },
+    
+    // DevOps & Tooling
+    { tech: 'Git', level: 9, category: 'DevOps & Tooling' },
+    { tech: 'GitHub Actions', level: 8, category: 'DevOps & Tooling' },
+    { tech: 'Vite', level: 9, category: 'DevOps & Tooling' },
+    { tech: 'Jira', level: 7, category: 'DevOps & Tooling' },
+    
+    // Practices & Methodologies
+    { tech: 'Component-driven Architecture', level: 9, category: 'Practices' },
+    { tech: 'Performance Optimisation', level: 9, category: 'Practices' },
+    { tech: 'CI/CD', level: 8, category: 'Practices' },
+    { tech: 'SPA Development', level: 10, category: 'Practices' },
   ],
   languages: [
     { language: 'Chinese', level: 'Native', proficiency: 10 },
@@ -154,5 +169,12 @@ export const aboutData: AboutData = {
       link: 'https://github.com/norahwuuu',
     },
   ],
-  resumeUrl: '/resume/NorahWu_Resume.pdf',
+  // Option 1: External link (Google Drive, Dropbox, etc.)
+  // resumeUrl: 'https://drive.google.com/file/d/YOUR_FILE_ID/view?usp=sharing',
+  
+  // Option 2: LinkedIn profile (if resume is available there)
+  // resumeUrl: 'https://www.linkedin.com/in/haonan-wu-890639344',
+  
+  // Option 3: Remove resumeUrl to show "Request via Email" option
+  resumeUrl: undefined,
 }

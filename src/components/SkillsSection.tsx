@@ -7,7 +7,33 @@ interface SkillsSectionProps {
 }
 
 export const SkillsSection: React.FC<SkillsSectionProps> = ({ skills }) => {
+  // Define category display order
+  const categoryOrder = [
+    'Frontend',
+    'Backend',
+    'DevOps & Tooling',
+    'Practices',
+    'State Management',
+    'Mobile',
+    'Framework',
+    'Advanced',
+    'Language',
+    'Fundamental',
+    'Build Tools',
+    'Tools',
+    'DevOps',
+  ]
+  
   const categories = Array.from(new Set(skills.map((s) => s.category).filter(Boolean)))
+    .sort((a, b) => {
+      const indexA = categoryOrder.indexOf(a || '')
+      const indexB = categoryOrder.indexOf(b || '')
+      // If category is in order list, sort by index; otherwise, sort alphabetically
+      if (indexA !== -1 && indexB !== -1) return indexA - indexB
+      if (indexA !== -1) return -1
+      if (indexB !== -1) return 1
+      return (a || '').localeCompare(b || '')
+    })
 
   const getColor = (level: number) => {
     if (level >= 9) return 'success'

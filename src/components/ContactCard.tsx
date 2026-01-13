@@ -76,7 +76,63 @@ export const ContactCard: React.FC<ContactCardProps> = ({ contacts, resumeUrl })
             </Box>
           )
         })}
-        {resumeUrl && (
+        {resumeUrl ? (
+          resumeUrl.startsWith('http') ? (
+            // External link (Google Drive, Dropbox, etc.)
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 2,
+                p: 2,
+                borderRadius: 1,
+                bgcolor: 'primary.light',
+                color: 'primary.contrastText',
+                cursor: 'pointer',
+                textDecoration: 'none',
+                '&:hover': {
+                  bgcolor: 'primary.main',
+                },
+              }}
+              component="a"
+              href={resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <GetApp />
+              <Typography variant="body1" fontWeight={600}>
+                View Resume
+              </Typography>
+            </Box>
+          ) : (
+            // Local file download
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 2,
+                p: 2,
+                borderRadius: 1,
+                bgcolor: 'primary.light',
+                color: 'primary.contrastText',
+                cursor: 'pointer',
+                textDecoration: 'none',
+                '&:hover': {
+                  bgcolor: 'primary.main',
+                },
+              }}
+              component="a"
+              href={resumeUrl}
+              download
+            >
+              <GetApp />
+              <Typography variant="body1" fontWeight={600}>
+                Download Resume (PDF)
+              </Typography>
+            </Box>
+          )
+        ) : (
+          // Fallback: Request via email
           <Box
             sx={{
               display: 'flex',
@@ -87,17 +143,17 @@ export const ContactCard: React.FC<ContactCardProps> = ({ contacts, resumeUrl })
               bgcolor: 'primary.light',
               color: 'primary.contrastText',
               cursor: 'pointer',
+              textDecoration: 'none',
               '&:hover': {
                 bgcolor: 'primary.main',
               },
             }}
             component="a"
-            href={resumeUrl}
-            download
+            href="mailto:norah.wuuu@gmail.com?subject=Resume Request&body=Hi, I would like to request your resume."
           >
             <GetApp />
             <Typography variant="body1" fontWeight={600}>
-              Download Resume (PDF)
+              Request Resume via Email
             </Typography>
           </Box>
         )}
