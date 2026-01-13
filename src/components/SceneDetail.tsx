@@ -14,12 +14,14 @@ import {
 import { ExpandLess, ExpandMore } from '@mui/icons-material'
 import { CodeBlock } from './CodeBlock'
 import type { KnowledgeScene } from '@/data/knowledgeData'
+import { useLanguage } from '@/hooks/useLanguage'
 
 interface SceneDetailProps {
   scene: KnowledgeScene | null
 }
 
 export const SceneDetail: React.FC<SceneDetailProps> = ({ scene }) => {
+  const { t } = useLanguage()
   const [keyPointsExpanded, setKeyPointsExpanded] = useState(true)
 
   if (!scene) {
@@ -33,7 +35,7 @@ export const SceneDetail: React.FC<SceneDetailProps> = ({ scene }) => {
           color: 'text.secondary',
         }}
       >
-        <Typography variant="h6">Select a scene to view details</Typography>
+        <Typography variant="h6">{t.knowledge.selectScene}</Typography>
       </Box>
     )
   }
@@ -58,7 +60,7 @@ export const SceneDetail: React.FC<SceneDetailProps> = ({ scene }) => {
       <Divider sx={{ my: 3 }} />
 
       <Typography variant="h6" component="h2" gutterBottom fontWeight={600}>
-        Solution
+        {t.knowledge.solution}
       </Typography>
       <Paper elevation={0} sx={{ p: 3, mb: 4, bgcolor: 'grey.50' }}>
         <Typography
@@ -74,7 +76,7 @@ export const SceneDetail: React.FC<SceneDetailProps> = ({ scene }) => {
       </Paper>
 
       <Typography variant="h6" component="h2" gutterBottom fontWeight={600}>
-        Code Example
+        {t.knowledge.codeExample}
       </Typography>
       <Box sx={{ mb: 4 }}>
         <CodeBlock code={scene.codeExample.code} language={scene.codeExample.language} />
@@ -82,7 +84,7 @@ export const SceneDetail: React.FC<SceneDetailProps> = ({ scene }) => {
 
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
         <Typography variant="h6" component="h2" fontWeight={600}>
-          Key Points
+          {t.knowledge.keyPoints}
         </Typography>
         <IconButton onClick={handleToggleKeyPoints} size="small" aria-label="toggle key points">
           {keyPointsExpanded ? <ExpandLess /> : <ExpandMore />}

@@ -26,7 +26,7 @@ interface MarkdownImporterProps {
 }
 
 export const MarkdownImporter: React.FC<MarkdownImporterProps> = ({ onImport, onCancel }) => {
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
   const [markdown, setMarkdown] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [open, setOpen] = useState(false)
@@ -52,7 +52,9 @@ export const MarkdownImporter: React.FC<MarkdownImporterProps> = ({ onImport, on
       setOpen(false)
     } catch (err) {
       if (err instanceof MarkdownParseError) {
-        setError(`解析错误 (第 ${err.line} 行): ${err.message}`)
+        setError(language === 'zh' 
+          ? `解析错误 (第 ${err.line} 行): ${err.message}`
+          : `Parse error (line ${err.line}): ${err.message}`)
       } else if (err instanceof Error) {
         setError(err.message)
       } else {
@@ -110,7 +112,7 @@ export const MarkdownImporter: React.FC<MarkdownImporterProps> = ({ onImport, on
             label={t.markdown.markdownContent}
             value={markdown}
             onChange={(e) => setMarkdown(e.target.value)}
-            placeholder={`# Scene: 场景标题
+            placeholder={language === 'zh' ? `# Scene: 场景标题
 
 ## Context
 场景背景描述...
@@ -129,6 +131,25 @@ export const MarkdownImporter: React.FC<MarkdownImporterProps> = ({ onImport, on
 ### Code Demo
 \`\`\`tsx
 // 代码示例
+\`\`\`` : `# Scene: Scene Title
+
+## Context
+Scene context description...
+
+## Solution: Solution Name
+### Problem
+Problem description...
+
+### Approach
+Approach description...
+
+### Key Points
+- Point 1: Description
+- Point 2: Description
+
+### Code Demo
+\`\`\`tsx
+// Code example
 \`\`\``}
             sx={{ mb: 2 }}
           />

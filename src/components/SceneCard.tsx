@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { Card, CardContent, CardHeader, Typography, Chip, Box, Tooltip } from '@mui/material'
 import { ArrowForward } from '@mui/icons-material'
-
 import type { Scene } from '@/schemas'
+import { useLanguage } from '@/hooks/useLanguage'
 
 interface SceneCardProps {
   scene: Scene
@@ -15,6 +15,7 @@ export const SceneCard: React.FC<SceneCardProps> = ({
   onClick,
   selected = false,
 }) => {
+  const { t } = useLanguage()
   const [showDescription, setShowDescription] = useState(false)
   const description = scene.context
   const solutionsCount = scene.solutions.length
@@ -50,7 +51,7 @@ export const SceneCard: React.FC<SceneCardProps> = ({
               {scene.title}
             </Typography>
           }
-          subheader={`${scene.category} • ${solutionsCount} solution${solutionsCount > 1 ? 's' : ''}`}
+          subheader={`${scene.category} • ${solutionsCount} ${solutionsCount === 1 ? t.knowledge.solution : t.knowledge.solutions}`}
         />
         <CardContent>
           <Typography
@@ -74,7 +75,7 @@ export const SceneCard: React.FC<SceneCardProps> = ({
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', color: 'primary.main' }}>
             <Typography variant="body2" sx={{ fontWeight: 500 }}>
-              View Details
+              {t.knowledge.viewDetails}
             </Typography>
             <ArrowForward sx={{ ml: 1, fontSize: 16 }} />
           </Box>

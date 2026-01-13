@@ -18,13 +18,14 @@ import remarkGfm from 'remark-gfm'
 import { CodeBlock } from './CodeBlock'
 import { Tag } from './Tag'
 import type { BlogArticle } from '@/schemas'
+import { useLanguage } from '@/hooks/useLanguage'
 
 interface BlogDetailProps {
   article: BlogArticle | null
   onRelatedArticleClick?: (articleId: string) => void // Reserved for future use
 }
 
-// 自定义代码块组件
+// Custom code block component
 const CodeBlockComponent = ({ node, inline, className, children, ...props }: any) => {
   const match = /language-(\w+)/.exec(className || '')
   const language = match ? match[1] : 'text'
@@ -45,6 +46,7 @@ export const BlogDetail: React.FC<BlogDetailProps> = ({
   article,
   onRelatedArticleClick: _onRelatedArticleClick, // Reserved for future related articles feature
 }) => {
+  const { t, language } = useLanguage()
   const [keyPointsExpanded, setKeyPointsExpanded] = useState(true)
 
   if (!article) {
@@ -58,7 +60,7 @@ export const BlogDetail: React.FC<BlogDetailProps> = ({
           color: 'text.secondary',
         }}
       >
-        <Typography variant="h6">Select an article to view details</Typography>
+        <Typography variant="h6">{t.blog.selectArticle}</Typography>
       </Box>
     )
   }
@@ -85,7 +87,7 @@ export const BlogDetail: React.FC<BlogDetailProps> = ({
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
             <CalendarToday sx={{ fontSize: 16, color: 'text.secondary' }} />
             <Typography variant="body2" color="text.secondary">
-              {new Date(article.date).toLocaleDateString('en-US', {
+              {new Date(article.date).toLocaleDateString(language === 'zh' ? 'zh-CN' : 'en-US', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric',
@@ -95,7 +97,7 @@ export const BlogDetail: React.FC<BlogDetailProps> = ({
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
             <AccessTime sx={{ fontSize: 16, color: 'text.secondary' }} />
             <Typography variant="body2" color="text.secondary">
-              {article.readingTime} min read
+              {article.readingTime} {t.blog.minRead}
             </Typography>
           </Box>
         </Stack>
@@ -182,7 +184,7 @@ export const BlogDetail: React.FC<BlogDetailProps> = ({
             }}
           >
             <Typography variant="h6" component="h2" fontWeight={600}>
-              Key Points
+              {t.blog.keyPoints}
             </Typography>
             <IconButton
               onClick={handleToggleKeyPoints}

@@ -10,6 +10,7 @@ import {
 import { AccessTime, CalendarToday } from '@mui/icons-material'
 import { Tag } from './Tag'
 import type { BlogArticle } from '@/schemas'
+import { useLanguage } from '@/hooks/useLanguage'
 
 interface BlogCardProps {
   article: BlogArticle
@@ -22,6 +23,8 @@ export const BlogCard: React.FC<BlogCardProps> = ({
   onClick,
   selected = false,
 }) => {
+  const { t, language } = useLanguage()
+  
   return (
     <Card
       onClick={onClick}
@@ -52,7 +55,7 @@ export const BlogCard: React.FC<BlogCardProps> = ({
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
               <CalendarToday sx={{ fontSize: 14, color: 'text.secondary' }} />
               <Typography variant="caption" color="text.secondary">
-                {new Date(article.date).toLocaleDateString('en-US', {
+                {new Date(article.date).toLocaleDateString(language === 'zh' ? 'zh-CN' : 'en-US', {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric',
@@ -62,7 +65,7 @@ export const BlogCard: React.FC<BlogCardProps> = ({
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
               <AccessTime sx={{ fontSize: 14, color: 'text.secondary' }} />
               <Typography variant="caption" color="text.secondary">
-                {article.readingTime} min read
+                {article.readingTime} {t.blog.minRead}
               </Typography>
             </Box>
           </Box>
@@ -99,7 +102,7 @@ export const BlogCard: React.FC<BlogCardProps> = ({
 
         <Box sx={{ mt: 'auto', pt: 2, borderTop: 1, borderColor: 'divider' }}>
           <Typography variant="caption" color="text.secondary">
-            By {article.author}
+            {t.blog.by} {article.author}
           </Typography>
         </Box>
       </CardContent>

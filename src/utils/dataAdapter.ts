@@ -54,8 +54,8 @@ function extractProblemFromSolution(solution: string): string {
   const lines = solution.split('\n').filter(line => line.trim())
   if (lines.length > 0) {
     const firstLine = lines[0]
-    // 如果第一行包含问号或"问题"关键词，作为问题描述
-    if (firstLine.includes('?') || firstLine.includes('问题') || firstLine.includes('problem')) {
+    // If the first line contains a question mark or "problem" keyword, use it as problem description
+    if (firstLine.includes('?') || firstLine.includes('problem') || firstLine.toLowerCase().includes('problem')) {
       return firstLine
     }
   }
