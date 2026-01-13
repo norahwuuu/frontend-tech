@@ -1,12 +1,14 @@
 import React from 'react'
 import { Box, Typography, LinearProgress, Paper } from '@mui/material'
 import type { Language } from '@/data/aboutData'
+import { useLanguage } from '@/hooks/useLanguage'
 
 interface LanguageBarProps {
   languages: Language[]
 }
 
 export const LanguageBar: React.FC<LanguageBarProps> = ({ languages }) => {
+  const { t } = useLanguage()
   const getColor = (proficiency?: number) => {
     if (!proficiency) return 'primary'
     if (proficiency >= 9) return 'success'
@@ -24,7 +26,7 @@ export const LanguageBar: React.FC<LanguageBarProps> = ({ languages }) => {
         fontWeight={600}
         sx={{ fontSize: { xs: '1.25rem', md: '1.5rem' } }}
       >
-        Languages
+        {t.about.languages}
       </Typography>
       <Box
         sx={{

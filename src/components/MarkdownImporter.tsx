@@ -18,6 +18,7 @@ import {
 import { Upload, FileUpload } from '@mui/icons-material'
 import { parseMarkdownToScene, MarkdownParseError } from '@/utils/markdown'
 import { type Scene } from '@/schemas'
+import { useLanguage } from '@/hooks/useLanguage'
 
 interface MarkdownImporterProps {
   onImport: (scene: Scene) => void
@@ -25,6 +26,7 @@ interface MarkdownImporterProps {
 }
 
 export const MarkdownImporter: React.FC<MarkdownImporterProps> = ({ onImport, onCancel }) => {
+  const { t } = useLanguage()
   const [markdown, setMarkdown] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [open, setOpen] = useState(false)
@@ -54,7 +56,7 @@ export const MarkdownImporter: React.FC<MarkdownImporterProps> = ({ onImport, on
       } else if (err instanceof Error) {
         setError(err.message)
       } else {
-        setError('未知错误')
+        setError(t.validation.unknownError)
       }
     }
   }
@@ -75,11 +77,11 @@ export const MarkdownImporter: React.FC<MarkdownImporterProps> = ({ onImport, on
         startIcon={<Upload />}
         onClick={() => setOpen(true)}
       >
-        导入 Markdown
+        {t.markdown.importMarkdown}
       </Button>
 
       <Dialog open={open} onClose={handleCancel} maxWidth="md" fullWidth>
-        <DialogTitle>导入 Markdown 场景</DialogTitle>
+        <DialogTitle>{t.markdown.importMarkdownScene}</DialogTitle>
         <DialogContent>
           <Box sx={{ mb: 2 }}>
             <input
@@ -96,7 +98,7 @@ export const MarkdownImporter: React.FC<MarkdownImporterProps> = ({ onImport, on
                 startIcon={<FileUpload />}
                 fullWidth
               >
-                选择 Markdown 文件
+                {t.markdown.selectMarkdownFile}
               </Button>
             </label>
           </Box>
@@ -105,7 +107,7 @@ export const MarkdownImporter: React.FC<MarkdownImporterProps> = ({ onImport, on
             fullWidth
             multiline
             rows={15}
-            label="Markdown 内容"
+            label={t.markdown.markdownContent}
             value={markdown}
             onChange={(e) => setMarkdown(e.target.value)}
             placeholder={`# Scene: 场景标题
@@ -134,7 +136,7 @@ export const MarkdownImporter: React.FC<MarkdownImporterProps> = ({ onImport, on
           {error && (
             <Alert severity="error" sx={{ mb: 2 }}>
               <Typography variant="subtitle2" gutterBottom>
-                Import Error:
+                {t.markdown.importError}:
               </Typography>
               <Typography variant="body2" component="pre" sx={{ whiteSpace: 'pre-wrap', fontFamily: 'monospace' }}>
                 {error}
@@ -144,7 +146,7 @@ export const MarkdownImporter: React.FC<MarkdownImporterProps> = ({ onImport, on
 
           <Alert severity="info" sx={{ mb: 2 }}>
             <Typography variant="caption" component="div">
-              <strong>Supported Format:</strong>
+              <strong>{t.markdown.supportedFormat}:</strong>
               <br />
               # Scene: [Title]
               <br />
@@ -191,13 +193,13 @@ export const MarkdownImporter: React.FC<MarkdownImporterProps> = ({ onImport, on
           </Alert>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancel}>取消</Button>
+          <Button onClick={handleCancel}>{t.markdown.cancel}</Button>
           <Button
             onClick={handleImport}
             variant="contained"
             disabled={!markdown.trim()}
           >
-            导入
+            {t.markdown.import}
           </Button>
         </DialogActions>
       </Dialog>

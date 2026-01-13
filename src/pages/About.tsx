@@ -7,8 +7,11 @@ import { ContactCard } from '@/components/ContactCard'
 import { LanguageBar } from '@/components/LanguageBar'
 import { Footer } from '@/components/Footer'
 import { aboutData } from '@/data/aboutData'
+import { useLanguage } from '@/hooks/useLanguage'
 
 export const About: React.FC = () => {
+  const { t } = useLanguage()
+  
   return (
     <Box sx={{ minHeight: 'calc(100vh - 64px)', display: 'flex', flexDirection: 'column' }}>
       <Container maxWidth="lg" sx={{ py: { xs: 3, md: 6 }, flex: 1, px: { xs: 2, sm: 3 } }}>
@@ -35,7 +38,7 @@ export const About: React.FC = () => {
                 fontWeight={700}
                 sx={{ mb: 3, fontSize: { xs: '1.5rem', md: '2.125rem' } }}
               >
-                Education
+                {t.about.education}
               </Typography>
               {aboutData.education.map((edu, index) => (
                 <TimelineItem
@@ -61,7 +64,7 @@ export const About: React.FC = () => {
                 fontWeight={700}
                 sx={{ mb: 3, fontSize: { xs: '1.5rem', md: '2.125rem' } }}
               >
-                Work Experience
+                {t.about.workExperience}
               </Typography>
               {aboutData.workExperience.map((work, index) => (
                 <TimelineItem

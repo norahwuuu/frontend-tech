@@ -10,6 +10,7 @@ import {
   Phone,
 } from '@mui/icons-material'
 import type { Contact } from '@/data/aboutData'
+import { useLanguage } from '@/hooks/useLanguage'
 
 interface ContactCardProps {
   contacts: Contact[]
@@ -27,6 +28,8 @@ const iconMap: Record<Contact['type'], React.ComponentType> = {
 }
 
 export const ContactCard: React.FC<ContactCardProps> = ({ contacts, resumeUrl }) => {
+  const { t } = useLanguage()
+  
   return (
     <Paper elevation={2} sx={{ p: { xs: 2, md: 3 } }}>
       <Typography
@@ -36,7 +39,7 @@ export const ContactCard: React.FC<ContactCardProps> = ({ contacts, resumeUrl })
         fontWeight={600}
         sx={{ fontSize: { xs: '1.25rem', md: '1.5rem' } }}
       >
-        Contact
+        {t.about.contact}
       </Typography>
       <Box sx={{ mt: { xs: 2, md: 3 }, display: 'flex', flexDirection: 'column', gap: 2 }}>
         {contacts.map((contact, index) => {
@@ -101,7 +104,7 @@ export const ContactCard: React.FC<ContactCardProps> = ({ contacts, resumeUrl })
             >
               <GetApp />
               <Typography variant="body1" fontWeight={600}>
-                View Resume
+                {t.about.viewResume}
               </Typography>
             </Box>
           ) : (
@@ -153,7 +156,7 @@ export const ContactCard: React.FC<ContactCardProps> = ({ contacts, resumeUrl })
           >
             <GetApp />
             <Typography variant="body1" fontWeight={600}>
-              Request Resume via Email
+              {t.about.requestResume}
             </Typography>
           </Box>
         )}

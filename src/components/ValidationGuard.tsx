@@ -7,6 +7,7 @@ import React from 'react'
 import { Alert, Box, Typography } from '@mui/material'
 import { ErrorOutline } from '@mui/icons-material'
 import { ValidationError } from '@/utils/validation'
+import { useLanguage } from '@/hooks/useLanguage'
 
 interface ValidationGuardProps<T> {
   data: unknown
@@ -32,6 +33,8 @@ export function ValidationGuard<T>({
   fallback,
   children,
 }: ValidationGuardProps<T>): React.ReactElement {
+  const { t } = useLanguage()
+  
   try {
     const validData = schema(data)
     return <>{children(validData)}</> as React.ReactElement
@@ -41,7 +44,7 @@ export function ValidationGuard<T>({
         <Box sx={{ p: 3 }}>
           <Alert severity="error" icon={<ErrorOutline />}>
             <Typography variant="h6" gutterBottom>
-              数据校验失败
+              {t.validation.validationFailed}
             </Typography>
             <Typography variant="body2" component="pre" sx={{ whiteSpace: 'pre-wrap', fontFamily: 'monospace' }}>
               {error.getFormattedErrors()}
@@ -49,7 +52,7 @@ export function ValidationGuard<T>({
             {error.data !== undefined && (
               <Box sx={{ mt: 2 }}>
                 <Typography variant="caption" color="text.secondary">
-                  原始数据:
+                  {t.validation.rawData}:
                 </Typography>
                 <Typography variant="body2" component="pre" sx={{ whiteSpace: 'pre-wrap', fontFamily: 'monospace', fontSize: '0.75rem' }}>
                   {JSON.stringify(error.data, null, 2)}
@@ -67,7 +70,7 @@ export function ValidationGuard<T>({
     
     return (
       <Alert severity="error">
-        数据加载失败: {error instanceof Error ? error.message : '未知错误'}
+        {t.validation.dataLoadFailed}: {error instanceof Error ? error.message : t.validation.unknownError}
       </Alert>
     ) as React.ReactElement
   }

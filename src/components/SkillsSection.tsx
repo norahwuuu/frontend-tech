@@ -1,12 +1,14 @@
 import React from 'react'
 import { Box, Typography, LinearProgress, Paper } from '@mui/material'
 import type { Skill } from '@/data/aboutData'
+import { useLanguage } from '@/hooks/useLanguage'
 
 interface SkillsSectionProps {
   skills: Skill[]
 }
 
 export const SkillsSection: React.FC<SkillsSectionProps> = ({ skills }) => {
+  const { t } = useLanguage()
   // Define category display order
   const categoryOrder = [
     'Frontend',
@@ -51,7 +53,7 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ skills }) => {
         fontWeight={600}
         sx={{ fontSize: { xs: '1.25rem', md: '1.5rem' } }}
       >
-        Skills
+        {t.about.skills}
       </Typography>
       <Box sx={{ mt: { xs: 2, md: 3 } }}>
         {categories.length > 0 ? (

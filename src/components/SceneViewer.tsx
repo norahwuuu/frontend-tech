@@ -23,6 +23,7 @@ import { DemoVersionManager } from './DemoVersionManager'
 import { type Scene, type Solution } from '@/schemas'
 import { exportSceneToMarkdown, downloadMarkdown } from '@/utils/markdown'
 import { generateDemo, type GeneratedDemo } from '@/utils/demoGenerator'
+import { useLanguage } from '@/hooks/useLanguage'
 
 interface SceneViewerProps {
   scene: Scene | null
@@ -30,6 +31,7 @@ interface SceneViewerProps {
 }
 
 export const SceneViewer: React.FC<SceneViewerProps> = ({ scene, onGenerateDemo }) => {
+  const { t } = useLanguage()
   const [selectedSolutionIndex, setSelectedSolutionIndex] = useState(0)
   const [generatingDemo, setGeneratingDemo] = useState(false)
   const [generatedDemos, setGeneratedDemos] = useState<Map<string, GeneratedDemo[]>>(new Map())
@@ -173,7 +175,7 @@ export const SceneViewer: React.FC<SceneViewerProps> = ({ scene, onGenerateDemo 
                 onClick={handleGenerateDemo}
                 disabled={generatingDemo}
               >
-                {generatingDemo ? '生成中...' : '生成 Demo'}
+                {generatingDemo ? t.markdown.generating : t.markdown.generateDemo}
               </Button>
               <Button
                 variant="outlined"
@@ -181,7 +183,7 @@ export const SceneViewer: React.FC<SceneViewerProps> = ({ scene, onGenerateDemo 
                 startIcon={<Download />}
                 onClick={handleExportMarkdown}
               >
-                导出 Markdown
+                {t.markdown.exportMarkdown}
               </Button>
             </Stack>
           </Box>

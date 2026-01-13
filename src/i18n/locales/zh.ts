@@ -126,4 +126,60 @@ export const zh = {
     builtWith: '使用 React、TypeScript 和 Material UI 构建',
     allRightsReserved: '版权所有。',
   },
+  // About Page
+  about: {
+    education: '教育背景',
+    workExperience: '工作经历',
+    skills: '技能',
+    languages: '语言',
+    contact: '联系方式',
+    downloadResume: '下载简历 (PDF)',
+    viewResume: '查看简历',
+    requestResume: '通过邮件请求简历',
+  },
+  // Markdown
+  markdown: {
+    importMarkdown: '导入 Markdown',
+    importMarkdownScene: '导入 Markdown 场景',
+    selectMarkdownFile: '选择 Markdown 文件',
+    markdownContent: 'Markdown 内容',
+    cancel: '取消',
+    import: '导入',
+    importError: '导入错误',
+    supportedFormat: '支持的格式',
+    exportMarkdown: '导出 Markdown',
+    generating: '生成中...',
+    generateDemo: '生成 Demo',
+  },
+  // Validation
+  validation: {
+    validationFailed: '数据校验失败',
+    rawData: '原始数据',
+    dataLoadFailed: '数据加载失败',
+    unknownError: '未知错误',
+  },
+  // Markdown Exporter
+  markdownExporter: {
+    exportMarkdown: '导出 Markdown',
+    exportToMarkdown: '导出为 Markdown',
+    exportAllScenes: '导出所有场景',
+    exporting: '正在导出',
+    selectScenes: '选择要导出的场景',
+    filename: '文件名',
+    exportInfo: '导出说明',
+    exportInfoDesc: '导出的 Markdown 文件可以：',
+    importedBack: '重新导入到系统中',
+    versionControlled: '使用 Git 进行版本控制',
+    shared: '与他人分享',
+  },
+  // Demo
+  demo: {
+    generatedDemo: '生成的 Demo',
+    generatedBy: '生成者',
+    version: '版本',
+    copyCode: '复制代码',
+    openInCodeSandbox: '在 CodeSandbox 中打开',
+    regenerate: '重新生成',
+    demoPreview: 'Demo 预览',
+  },
 }
