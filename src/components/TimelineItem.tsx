@@ -11,6 +11,7 @@ interface TimelineItemProps {
   type: 'education' | 'work'
   title: string
   subtitle: string
+  location?: string
   startDate: string
   endDate: string | 'Present'
   description?: string[]
@@ -20,6 +21,7 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({
   type,
   title,
   subtitle,
+  location,
   startDate,
   endDate,
   description,
@@ -75,6 +77,7 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({
           </Typography>
           <Typography variant="caption" color="text.secondary">
             {startDate} - {endDate}
+            {location && ` • ${location}`}
           </Typography>
           {description && description.length > 0 && (
             <Box component="ul" sx={{ mt: 2, pl: 2 }}>

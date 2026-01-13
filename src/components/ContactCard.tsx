@@ -7,6 +7,7 @@ import {
   Language,
   Twitter,
   GetApp,
+  Phone,
 } from '@mui/icons-material'
 import type { Contact } from '@/data/aboutData'
 
@@ -19,6 +20,7 @@ const iconMap: Record<Contact['type'], React.ComponentType> = {
   Email,
   GitHub,
   LinkedIn,
+  Phone,
   Blog: Language,
   Twitter,
   Other: Language,

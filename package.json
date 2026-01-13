@@ -3,6 +3,11 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "author": {
+    "name": "Norah Wu",
+    "email": "norah.wuuu@gmail.com",
+    "url": "https://www.linkedin.com/in/haonan-wu-890639344"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

@@ -50,6 +50,15 @@ export const ProfileSection: React.FC<ProfileSectionProps> = ({ data }) => {
       >
         {data.title}
       </Typography>
+      {data.location && (
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{ fontSize: { xs: '0.75rem', sm: '0.875rem', md: '1rem' } }}
+        >
+          {data.location}
+        </Typography>
+      )}
       <Typography
         variant="body1"
         color="text.secondary"

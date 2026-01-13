@@ -19,19 +19,19 @@ export const Footer: React.FC = () => {
     {
       name: 'GitHub',
       icon: GitHub,
-      href: 'https://github.com',
+      href: 'https://github.com/norahwuuu',
       external: true,
     },
     {
       name: 'LinkedIn',
       icon: LinkedIn,
-      href: 'https://linkedin.com',
+      href: 'https://www.linkedin.com/in/haonan-wu-890639344',
       external: true,
     },
     {
       name: 'Email',
       icon: Email,
-      href: 'mailto:contact@example.com',
+      href: 'mailto:norah.wuuu@gmail.com',
       external: false,
     },
   ]
@@ -107,7 +107,13 @@ export const Footer: React.FC = () => {
               })}
             </Stack>
             <Typography variant="body2" color="text.secondary">
-              contact@example.com
+              norah.wuuu@gmail.com
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+              +49 17660876657
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+              Essen, Germany
             </Typography>
           </Box>
         </Box>

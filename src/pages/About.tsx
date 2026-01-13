@@ -69,6 +69,7 @@ export const About: React.FC = () => {
                   type="work"
                   title={work.position}
                   subtitle={work.company}
+                  location={work.location}
                   startDate={work.startDate}
                   endDate={work.endDate}
                   description={work.description}
