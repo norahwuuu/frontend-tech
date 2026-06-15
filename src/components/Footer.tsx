@@ -110,10 +110,10 @@ export const Footer: React.FC = () => {
               norah.wuuu@gmail.com
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
-              +49 17660876657
+              +41 799067274
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
-              Essen, Germany
+              Zürich, Switzerland
             </Typography>
           </Box>
         </Box>

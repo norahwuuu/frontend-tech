@@ -52,8 +52,8 @@ export interface AboutData {
 export const aboutData: AboutData = {
   name: 'Haonan Wu',
   title: 'Lead Frontend Engineer',
-  location: 'Essen, Germany',
-  bio: 'Senior Frontend Engineer with 10+ years of experience building complex, performance-critical web applications in international teams. Strong expertise in React, TypeScript and frontend architecture, with proven ownership of system design, cross-team collaboration and delivery in English-speaking environments. Currently based in Germany and seeking senior frontend roles with long-term growth.',
+  location: 'Zürich, Switzerland',
+  bio: 'Senior Frontend Engineer with 10+ years of experience building complex, performance-critical web applications in international teams. Strong expertise in React, TypeScript and frontend architecture, with proven ownership of system design, cross-team collaboration and delivery in English-speaking environments. Currently based in Zürich, Switzerland and seeking senior frontend roles with long-term growth.',
   motto: 'Building the future of the web, one component at a time.',
   education: [
     {
@@ -155,8 +155,8 @@ export const aboutData: AboutData = {
     },
     {
       type: 'Phone',
-      value: '+49 17660876657',
-      link: 'tel:+4917660876657',
+      value: '+41 799067274',
+      link: 'tel:+41799067274',
     },
     {
       type: 'LinkedIn',
